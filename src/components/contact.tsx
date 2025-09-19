@@ -1,58 +1,38 @@
 import { Button } from "./button";
 
-interface ImageClipBoxProps {
-  src: string;
-  alt: string;
-  clipClass?: string;
-}
-
-const ImageClipBox = ({ src, alt, clipClass }: ImageClipBoxProps) => (
-  <div className={clipClass}>
-    <img src={src} alt={alt} />
-  </div>
-);
-
 export const Contact = () => {
   return (
-    <section id="contact" className="my-20 min-h-96 w-screen px-10">
-      <div className="relative rounded-lg bg-black py-24 text-blue-50 sm:overflow-hidden">
-        <div className="absolute -left-20 top-0 hidden h-full w-72 overflow-hidden sm:block lg:left-20 lg:w-96">
-          <ImageClipBox
-            src="/img/contact-1.webp"
-            alt="Contact bg 1"
-            clipClass="contact-clip-path-1"
-          />
+    <section id="contact" className="my-20 w-full px-4">
+      <div className="relative mx-auto max-w-screen-2xl rounded-xl bg-[#D0D5D4] py-20 text-black overflow-hidden">
+        {/* Left mockup */}
+        <img
+          src="/img/MockupImg1.png"
+          alt="Mockup 1"
+          className="absolute bottom-0 left-6 sm:left-12 lg:left-20 
+                     h-auto w-[200px] sm:w-[260px] md:w-[320px] lg:w-[360px] xl:w-[400px] object-contain"
+        />
 
-          <ImageClipBox
-            src="/img/contact-2.webp"
-            alt="Contact bg 2"
-            clipClass="contact-clip-path-2 lg:translate-y-40 translate-y-60"
-          />
-        </div>
+        {/* Right mockup */}
+        <img
+          src="/img/MockupImg2.png"
+          alt="Mockup 2"
+          className="absolute bottom-0 right-6 sm:right-12 lg:right-20 
+                     h-auto w-[200px] sm:w-[260px] md:w-[320px] lg:w-[360px] xl:w-[400px] object-contain"
+        />
 
-        <div className="absolute -top-40 left-20 w-60 sm:top-1/2 md:left-auto md:right-10 lg:top-20 lg:w-80">
-          <ImageClipBox
-            src="/img/swordman-partial.webp"
-            alt="Swordman partial"
-            clipClass="absolute md:scale-125"
-          />
-
-          <ImageClipBox
-            src="/img/swordman.webp"
-            alt="Swordman"
-            clipClass="sword-man-clip-path md:scale-125"
-          />
-        </div>
-
-        <div className="flex flex-col items-center text-center">
-          <p className="font-general text-[10px] uppercase">Join Zentry</p>
-
-          <p className="special-font mt-10 w-full font-zentry text-5xl leading-[0.9] md:text-[6rem]">
-            Let&apos;s b<b>u</b>ild the
-            <br /> new era of <br /> g<b>a</b>ming t<b>o</b>gether
+        {/* Center content */}
+        <div className="relative z-10 flex flex-col items-center text-center px-4">
+          <p className="font-general text-[10px] uppercase tracking-widest">
+            Now Available on Android and iOS
           </p>
 
-          <Button containerClass="mt-10 cursor-pointer">Contact Us</Button>
+          <p className="special-font mt-8 max-w-4xl font-zentry leading-[0.9]
+                         text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
+            Let&apos;s b<b>u</b>ild the
+            <br /> new er<b>a</b> of <br /> k<b>a</b>rting t<b>o</b>gether
+          </p>
+
+          <Button containerClass="mt-10 cursor-pointer">Download Now</Button>
         </div>
       </div>
     </section>

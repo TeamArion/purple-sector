@@ -1,72 +1,19 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { TiLocationArrow } from "react-icons/ti";
 
 import { Button } from "./button";
-import { VIDEO_LINKS } from "@/constants";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const Hero = () => {
-  const [currentIndex, setCurrentIndex] = useState(1);
-  const [hasClicked, setHasClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [loadedVideos, setLoadedVideos] = useState(0);
-
-  const nextVideoRef = useRef<HTMLVideoElement>(null);
-
-  const totalVideos = 4;
-  const upcomingVideoIndex = (currentIndex % totalVideos) + 1;
-
-  const handleMiniVideoClick = () => {
-    setHasClicked(true);
-
-    setCurrentIndex(upcomingVideoIndex);
-  };
-
-  const VIDEO_KEYS = ["hero1", "hero2", "hero3", "hero4"] as const;
-  const getVideoSrc = (i: number) => {
-    const key = VIDEO_KEYS[i - 1]; // Subtract 1 because the array is 0-indexed, but the video indices are 1-based
-    return VIDEO_LINKS[key];
-  };
 
   const handleVideoLoad = () => {
-    setLoadedVideos((prevVideos) => prevVideos + 1);
+    setIsLoading(false);
   };
-
-  useEffect(() => {
-    if (loadedVideos === totalVideos - 1) setIsLoading(false);
-  }, [loadedVideos]);
-
-  useGSAP(
-    () => {
-      if (hasClicked) {
-        gsap.set("#next-video", { visibility: "visible" });
-
-        gsap.to("#next-video", {
-          transformOrigin: "center center",
-          scale: 1,
-          width: "100%",
-          height: "100%",
-          duration: 1,
-          ease: "power1.inOut",
-          onStart: () => {
-            void nextVideoRef.current?.play();
-          },
-        });
-
-        gsap.from("#current-video", {
-          transformOrigin: "center center",
-          scale: 0,
-          duration: 1.5,
-          ease: "power1.inOut",
-        });
-      }
-    },
-    { dependencies: [currentIndex], revertOnUpdate: true }
-  );
 
   useGSAP(() => {
     gsap.set("#video-frame", {
@@ -103,74 +50,65 @@ export const Hero = () => {
         id="video-frame"
         className="relative z-10 h-dvh w-screen overflow-hidden rounded-lg bg-blue-75"
       >
-        <div>
-          <div className="mask-clip-path absolute-center absolute z-50 size-64 cursor-pointer overflow-hidden rounded-lg">
-            <div
-              onClick={handleMiniVideoClick}
-              className="origin-center scale-50 opacity-0 transition-all duration-500 ease-in hover:scale-100 hover:opacity-100"
-            >
-              <video
-                ref={nextVideoRef}
-                src={getVideoSrc(upcomingVideoIndex)}
-                loop
-                muted
-                id="current-video"
-                className="size-64 origin-center scale-150 object-cover object-center"
-                onLoadedData={handleVideoLoad}
-              />
-            </div>
-          </div>
+        {/* Video background */}
+        <video
+          src="/videos/HeroVideo.mp4"
+          autoPlay
+          loop
+          muted
+          className="absolute left-0 top-0 size-full object-cover object-center"
+          onLoadedData={handleVideoLoad}
+        />
 
-          <video
-            ref={nextVideoRef}
-            src={getVideoSrc(currentIndex)}
-            loop
-            muted
-            id="next-video"
-            className="absolute-center invisible absolute z-20 size-64 object-cover object-center"
-            onLoadedData={handleVideoLoad}
-          />
+        {/* Dark overlay to reduce brightness */}
+        <div className="absolute left-0 top-0 z-10 size-full bg-black/40" />
 
-          <video
-            src={getVideoSrc(
-              currentIndex === totalVideos - 1 ? 1 : currentIndex
-            )}
-            autoPlay
-            loop
-            muted
-            className="absolute left-0 top-0 size-full object-cover object-center"
-            onLoadedData={handleVideoLoad}
-          />
-        </div>
-
-        <h1 className="special-font hero-heading absolute bottom-5 right-5 z-40 text-blue-75">
-          G<b>a</b>ming
+        {/* Bottom-right CTA text */}
+        <h1
+          className="special-font hero-heading absolute bottom-5 right-5 z-40"
+          style={{ color: "#F2F2F2" }}
+        >
+          R<b>a</b>ce Now!
         </h1>
 
         <div className="absolute left-0 top-0 z-40 size-full">
           <div className="mt-24 px-5 sm:px-10">
-            <h1 className="special-font hero-heading text-blue-100">
-              Redefi<b>n</b>ed
-            </h1>
+            {/* Karting Redefined headings with tighter line height */}
+            <div className="leading-[0.9]">
+              <h1
+                className="special-font hero-heading"
+                style={{ color: "#8B49FF" }}
+              >
+                Karti<b>n</b>g
+              </h1>
+              <h1
+                className="special-font hero-heading -mt-4" // pull closer; tweak -mt-3/-mt-5 as needed
+                style={{ color: "#C8FF32" }}
+              >
+                Redefi<b>n</b>ed
+              </h1>
+            </div>
 
-            <p className="mb-5 max-w-64 font-robert-regular text-blue-100">
-              Enter the Metagame Layer <br />
-              Unleash the Play Economy
+            <p className="mb-5 max-w-92 font-robert-regular text-blue-100">
+              The track is only the beginning. Purple Sector is where innovation,
+              adrenaline,<br /> and play collide — creating a racing experience that
+              belongs as much to <br /> tomorrow as it does to today.
             </p>
 
             <Button
               id="watch-trailer"
               leftIcon={TiLocationArrow}
-              containerClass="bg-yellow-300 flex-center gap-1"
+              containerClass="bg-[#C8FF32] text-black flex-center gap-1 hover:brightness-95"
             >
-              Watch Trailer
+              Download the App
             </Button>
           </div>
         </div>
       </div>
 
+      {/* Background black Race Now text */}
       <h1 className="special-font hero-heading absolute bottom-5 right-5 text-black">
-        G<b>a</b>ming
+        R<b>a</b>ce now
       </h1>
     </section>
   );

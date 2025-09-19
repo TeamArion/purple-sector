@@ -4,6 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  background: #9333ea; /* Purple 600 */
+  color: #ffffff;      /* White text while selected */
+}
+
+
 body {
   width: 100dvw;
   overflow-x: hidden;

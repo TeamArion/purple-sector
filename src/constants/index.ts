@@ -1,11 +1,11 @@
 import { FaDiscord, FaTwitch, FaTwitter, FaYoutube } from "react-icons/fa";
 
 export const NAV_ITEMS = [
-  { label: "TRAILER", href: "#hero" },
-  { label: "About", href: "#about" },
-  { label: "Nexus", href: "#nexus" },
-  { label: "Story", href: "#story" },
-  { label: "Contact", href: "#contact" },
+  { label: "Download the app", href: "#hero" },
+  { label: "PS.Community", href: "#about" },
+  { label: "Experiences", href: "#nexus" },
+  { label: "Our Story", href: "#story" },
+  { label: "Join Us", href: "#contact" },
 ] as const;
 
 export const LINKS = {
@@ -32,14 +32,10 @@ export const SOCIAL_LINKS = [
 ] as const;
 
 export const VIDEO_LINKS = {
-  feature1:
-    "https://93w95scdts.ufs.sh/f/AOfILeWJzqCc56aV03LYRyJDZsOPGdFTt0lQuHLkeqjKCao1",
-  feature2:
-    "https://93w95scdts.ufs.sh/f/AOfILeWJzqCclcn5JiTo8NUtBfpgkOmXZ2CT3DjMr19Yqlac",
-  feature3:
-    "https://93w95scdts.ufs.sh/f/AOfILeWJzqCcbZvH6O7fXDrfMZ6S457EQsgoxTCIz1kjlnVd",
-  feature4:
-    "https://93w95scdts.ufs.sh/f/AOfILeWJzqCcSrGHFCyiMbxBtTacUmFzn4dZpwVYNfvR6WLg",
+  feature1:"/videos/HeroVideo.mp4",
+  feature2:"/img/FeaturesImage1.png",
+  feature3:"/img/FeaturesImage2.png",
+  feature4:"/videos/FeatureVideo1.mp4",
   feature5:
     "https://93w95scdts.ufs.sh/f/AOfILeWJzqCc1qT68sSEu6tgkCBNP3FH45AUe70hrbTaxYDm",
   hero1:

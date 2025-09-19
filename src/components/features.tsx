@@ -1,7 +1,8 @@
-import { VIDEO_LINKS } from "@/constants";
-import { PropsWithChildren, useRef, useState } from "react";
 import { TiLocationArrow } from "react-icons/ti";
+import { PropsWithChildren, useRef, useState } from "react";
+import { VIDEO_LINKS } from "@/constants";
 
+// Tilt wrapper
 interface BentoTiltProps {
   className?: string;
 }
@@ -29,6 +30,7 @@ const BentoTilt = ({
 
     setTransformStyle(newTransform);
   };
+
   const handleMouseLeave = () => {
     setTransformStyle("");
   };
@@ -46,28 +48,66 @@ const BentoTilt = ({
   );
 };
 
+// BentoCard supports video or image
 interface BentoCardProps {
   src: string;
   title: React.ReactNode;
   description?: string;
+  mediaType?: "video" | "image";
+  textColor?: string;
+  darken?: boolean; // ✅ brightness overlay
 }
 
-const BentoCard = ({ src, title, description }: BentoCardProps) => {
-  return (
-    <article className="relative size-full">
-      <video
-        src={src}
-        loop
-        muted
-        autoPlay
-        className="absolute left-0 top-0 size-full object-cover object-center"
-      />
+const isVideoExt = (s: string) => /\.(mp4|webm|ogg)$/i.test(s);
 
-      <div className="relative z-10 flex size-full flex-col justify-between p-5 text-blue-50">
+const BentoCard = ({
+  src,
+  title,
+  description,
+  mediaType,
+  textColor,
+  darken,
+}: BentoCardProps) => {
+  const useVideo = mediaType ? mediaType === "video" : isVideoExt(src);
+
+  return (
+    <article className="relative size-full overflow-hidden rounded-md">
+      {useVideo ? (
+        <video
+          src={src}
+          loop
+          muted
+          autoPlay
+          playsInline
+          className="absolute left-0 top-0 size-full object-cover object-center"
+        />
+      ) : (
+        <img
+          src={src}
+          alt="feature media"
+          className="absolute left-0 top-0 size-full object-cover object-center"
+          loading="lazy"
+          crossOrigin="anonymous"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).style.background = "#111";
+          }}
+        />
+      )}
+
+      {/* ✅ subtle dark overlay */}
+      {darken && (
+        <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+      )}
+
+      <div
+        className={`relative z-10 flex size-full flex-col justify-between p-5 ${
+          textColor ?? "text-blue-50"
+        }`}
+      >
         <div>
           <h1 className="bento-title special-font">{title}</h1>
           {description && (
-            <p className="tetx-xl mt-3 max-w-64 md:text-base">{description}</p>
+            <p className="text-xl mt-3 max-w-64 md:text-base">{description}</p>
           )}
         </div>
       </div>
@@ -75,71 +115,84 @@ const BentoCard = ({ src, title, description }: BentoCardProps) => {
   );
 };
 
+// Features Section
 export const Features = () => {
   return (
     <section className="bg-black pb-52">
       <div className="container mx-auto px-3 md:px-10">
         <div className="px-5 py-32">
           <p className="font-circular-web text-lg text-blue-50">
-            Into the Metagame Layer
+            Step Into Purple Sector
           </p>
 
           <p className="max-w-md font-circular-web text-lg text-blue-50 opacity-50">
-            Immerse yourself in a rich and ever-expanding universe where a
-            vibrant array of products converge into an interconnected overlay
-            experience on your world.
+            From live leaderboards and dynamic events to community-driven play
+            and digital rewards, Purple Sector brings every part of racing into
+            one seamless experience.
           </p>
         </div>
 
+        {/* First large card */}
         <BentoTilt className="border-hsla relative mb-7 h-96 w-full overflow-hidden rounded-md md:h-[65vh]">
           <BentoCard
-            src={VIDEO_LINKS.feature1}
+            src={VIDEO_LINKS.feature4}
             title={
               <>
-                radia<b>n</b>t
+                I<b>n</b>to the purple <b>v</b>erse
               </>
             }
-            description="A cross-platform metagame app, turning your activities across Web2 and Web3 games into a rewarding adventure."
+            description="From friendly races to wild leagues. Every lap adds a new story to the Purple Verse. It&apos;s where the game never really ends."
+            mediaType="video"
+            darken
           />
         </BentoTilt>
 
-        <div
-          id="nexus"
-          className="grid h-[135vh] grid-cols-2 grid-rows-3 gap-7"
-        >
+        {/* Grid cards */}
+        <div id="nexus" className="grid h-[135vh] grid-cols-2 grid-rows-3 gap-7">
+          {/* ✅ Zigma card with black text */}
           <BentoTilt className="bento-tilt_1 row-span-1 md:col-span-1 md:row-span-2">
             <BentoCard
               src={VIDEO_LINKS.feature2}
               title={
                 <>
-                  zig<b>m</b>a
+                  GET. SET. R<b>A</b>CE.
                 </>
               }
-              description="An anime and gaming-inspired NFT collection - the IP primed for expansion."
+              description="Where speed meets community, compete, connect, and climb the leaderboard in the ultimate karting experience"
+              mediaType="image"
+              textColor="text-black"
             />
           </BentoTilt>
 
+          {/* ✅ Nexus card with dark overlay + white text */}
           <BentoTilt className="bento-tilt_1 row-span-1 ms-32 md:col-span-1 md:ms-0">
             <BentoCard
               src={VIDEO_LINKS.feature3}
               title={
                 <>
-                  n<b>e</b>xus
+                  Liv<b>e</b> Le<b>a</b>derbo<b>a</b>rds
                 </>
               }
-              description="A gamified social hub, adding a new dimension of play to social interaction for Web3 communities."
+              description="Watch the board light up as races unfold. Every lap, every overtake, every bragging right counted as it happens."
+              mediaType="image"
+              textColor="text-white"
+              darken
             />
           </BentoTilt>
 
+          {/* ✅ Azul card with dark overlay + white text */}
           <BentoTilt className="bento-tilt_1 me-14 md:col-span-1 md:me-0">
             <BentoCard
-              src={VIDEO_LINKS.feature4}
+              src="/img/FeaturesImage3.png"
               title={
                 <>
-                  az<b>u</b>l
+                  C<b>a</b>ught i<b>n</b> <b>4</b>K
                 </>
               }
-              description="A cross-world AI Agent - elevating your gameplay to be more fun and productive."
+              description="Built-in trackside cameras catch you mid-race. High-speed shots and videos, ready to save or share."
+              mediaType="image"
+              textColor="text-white"
+              darken
             />
           </BentoTilt>
 
@@ -148,18 +201,23 @@ export const Features = () => {
               <h1 className="bento-title special-font max-w-64 text-black">
                 M<b>o</b>re co<b>m</b>ing so<b>o</b>n!
               </h1>
-
               <TiLocationArrow className="m-5 scale-[5] self-end" />
             </div>
           </BentoTilt>
 
+          {/* ✅ replaced video with darkened image + heading/desc */}
           <BentoTilt className="bento-tilt_2">
-            <video
-              src={VIDEO_LINKS.feature5}
-              loop
-              muted
-              autoPlay
-              className="size-full object-cover object-center"
+            <BentoCard
+              src="/img/FeaturesImage4.png"
+              title={
+                <>
+                  Purp<b>l</b>e S<b>e</b>ctor Exper<b>i</b>ence
+                </>
+              }
+              description="Your all-access pass to racing’s future — blending competition, community, and rewards into one seamless karting journey."
+              mediaType="image"
+              textColor="text-white"
+              darken
             />
           </BentoTilt>
         </div>

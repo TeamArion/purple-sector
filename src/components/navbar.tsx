@@ -1,10 +1,9 @@
 import gsap from "gsap";
 import { useEffect, useRef, useState } from "react";
-import { FaGithub } from "react-icons/fa";
 import { TiLocationArrow } from "react-icons/ti";
 import { useWindowScroll } from "react-use";
 
-import { LINKS, NAV_ITEMS } from "@/constants";
+import { NAV_ITEMS } from "@/constants";
 import { cn } from "@/lib/utils";
 
 import { Button } from "./button";
@@ -61,8 +60,15 @@ export const Navbar = () => {
       <div className="absolute top-1/2 w-full -translate-y-1/2">
         <nav className="flex size-full items-center justify-between p-4">
           <div className="flex items-center gap-7">
-            <a href="#hero" className="transition hover:opacity-75">
-              <img src="/img/logo.png" alt="Logo" className="w-10" />
+            <a
+              href="#hero"
+              className="transition hover:opacity-75 group"
+            >
+              <img
+                src="/SymbolMark.svg"
+                alt="Logo"
+                className="w-10 group-hover:brightness-0 group-hover:invert"
+              />
             </a>
 
             <Button
@@ -70,7 +76,7 @@ export const Navbar = () => {
               rightIcon={TiLocationArrow}
               containerClass="bg-blue-50 md:flex hidden items-center justify-center gap-1"
             >
-              Products
+              Partner with us
             </Button>
           </div>
 
@@ -111,16 +117,6 @@ export const Navbar = () => {
                     );
                   })}
               </button>
-
-              <a
-                href={LINKS.sourceCode}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="transition hover:opacity-75"
-                title="Source Code"
-              >
-                <FaGithub className="size-5 text-white" />
-              </a>
             </div>
           </div>
         </nav>
