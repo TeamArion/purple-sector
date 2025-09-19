@@ -153,6 +153,7 @@ export const Features = () => {
           <BentoTilt className="bento-tilt_1 row-span-1 md:col-span-1 md:row-span-2">
             <BentoCard
               src={VIDEO_LINKS.feature2}
+              data-preload
               title={
                 <>
                   GET. SET. R<b>A</b>CE.

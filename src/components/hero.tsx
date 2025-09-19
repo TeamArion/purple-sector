@@ -52,7 +52,9 @@ export const Hero = () => {
       >
         {/* Video background */}
         <video
+          data-preload
           src="/videos/HeroVideo.mp4"
+          preload="metadata"
           autoPlay
           loop
           muted
